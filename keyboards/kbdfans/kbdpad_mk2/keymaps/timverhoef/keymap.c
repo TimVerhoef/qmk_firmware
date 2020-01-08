@@ -16,7 +16,8 @@
 #include QMK_KEYBOARD_H
 
 enum {
-  ABC = 0,
+  DFU = 0,
+  ABC,
   DEF,
   GHI,
   JKL,
@@ -25,6 +26,12 @@ enum {
   TUV,
   WXYZ
 };
+
+void f_reset(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count >= 3) {
+    reset_keyboard();
+  }
+}
 
 void f_abc(qk_tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
@@ -119,6 +126,7 @@ void f_wxyz(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
+  [DFU]  = ACTION_TAP_DANCE_FN(f_reset),
   [ABC]  = ACTION_TAP_DANCE_FN(f_abc),
   [DEF]  = ACTION_TAP_DANCE_FN(f_def),
   [GHI]  = ACTION_TAP_DANCE_FN(f_ghi),
@@ -131,20 +139,20 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_ortho_6x4( /* default layer */
-    KC_ESCAPE, KC_TAB,      KC_RSHIFT,      KC_BSPACE,   \
-    MO(1),     KC_KP_SLASH, KC_KP_ASTERISK, KC_KP_MINUS, \
-    KC_KP_7,   KC_KP_8,     KC_KP_9,        KC_NO,       \
-    KC_KP_4,   KC_KP_5,     KC_KP_6,        KC_KP_PLUS,  \
-    KC_KP_1,   KC_KP_2,     KC_KP_3,        KC_NO,       \
-    KC_KP_0,   KC_NO,       KC_KP_DOT,      KC_KP_ENTER  \
+    KC_ESC,   KC_TAB,   KC_RSFT,  KC_BSPC, \
+    MO(1),    KC_PSLS,  KC_PAST,  KC_PMNS, \
+    KC_KP_7,  KC_KP_8,  KC_KP_9,  KC_NO,   \
+    KC_KP_4,  KC_KP_5,  KC_KP_6,  KC_PPLS, \
+    KC_KP_1,  KC_KP_2,  KC_KP_3,  KC_NO,   \
+    KC_KP_0,  KC_NO,    KC_PDOT,  KC_PENT  \
   ),
   [1] = LAYOUT_ortho_6x4( /* 2nd layer */
-    TD(RESET), _______,   _______,   _______, \
-    _______,   XXXXXXX,   XXXXXXX,   XXXXXXX, \
-    TD(PQRS),  TD(TUV),   TD(WXYZ),  _______, \
-    TD(GHI),   TD(JKL),   TD(MNO),   XXXXXXX, \
-    XXXXXXX,   TD(ABC),   TD(DEF),   _______, \
-    XXXXXXX,   _______,   _______,   _______  \
+    TD(DFU),  _______,  _______,  KC_DEL,  \
+    _______,  XXXXXXX,  XXXXXXX,  XXXXXXX, \
+    TD(PQRS), TD(TUV),  TD(WXYZ), _______, \
+    TD(GHI),  TD(JKL),  TD(MNO),  XXXXXXX, \
+    XXXXXXX,  TD(ABC),  TD(DEF),  _______, \
+    XXXXXXX,  _______,  _______,  _______  \
   ),
 };
 

@@ -15,6 +15,119 @@
  */
 #include QMK_KEYBOARD_H
 
+enum {
+  ABC = 0,
+  DEF,
+  GHI,
+  JKL,
+  MNO,
+  PQRS,
+  TUV,
+  WXYZ
+};
+
+void f_abc(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    tap_code(KC_A);
+  } else if (state->count == 2) {
+    tap_code(KC_B);
+  } else if (state->count == 3) {
+    tap_code(KC_C);
+  }
+  reset_tap_dance(state);
+}
+
+void f_def(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    tap_code(KC_D);
+  } else if (state->count == 2) {
+    tap_code(KC_E);
+  } else if (state->count == 3) {
+    tap_code(KC_F);
+  }
+  reset_tap_dance(state);
+}
+
+void f_ghi(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    tap_code(KC_G);
+  } else if (state->count == 2) {
+    tap_code(KC_H);
+  } else if (state->count == 3) {
+    tap_code(KC_I);
+  }
+  reset_tap_dance(state);
+}
+
+void f_jkl(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    tap_code(KC_J);
+  } else if (state->count == 2) {
+    tap_code(KC_K);
+  } else if (state->count == 3) {
+    tap_code(KC_L);
+  }
+  reset_tap_dance(state);
+}
+
+void f_mno(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    tap_code(KC_M);
+  } else if (state->count == 2) {
+    tap_code(KC_N);
+  } else if (state->count == 3) {
+    tap_code(KC_O);
+  }
+  reset_tap_dance(state);
+}
+
+void f_pqrs(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    tap_code(KC_P);
+  } else if (state->count == 2) {
+    tap_code(KC_Q);
+  } else if (state->count == 3) {
+    tap_code(KC_R);
+  } else if (state->count == 4) {
+    tap_code(KC_S);
+  }
+  reset_tap_dance(state);
+}
+
+void f_tuv(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    tap_code(KC_T);
+  } else if (state->count == 2) {
+    tap_code(KC_U);
+  } else if (state->count == 3) {
+    tap_code(KC_V);
+  }
+  reset_tap_dance(state);
+}
+
+void f_wxyz(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    tap_code(KC_W);
+  } else if (state->count == 2) {
+    tap_code(KC_X);
+  } else if (state->count == 3) {
+    tap_code(KC_Y);
+  } else if (state->count == 4) {
+    tap_code(KC_Z);
+  }
+  reset_tap_dance(state);
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [ABC]  = ACTION_TAP_DANCE_FN(f_abc),
+  [DEF]  = ACTION_TAP_DANCE_FN(f_def),
+  [GHI]  = ACTION_TAP_DANCE_FN(f_ghi),
+  [JKL]  = ACTION_TAP_DANCE_FN(f_jkl),
+  [MNO]  = ACTION_TAP_DANCE_FN(f_mno),
+  [PQRS] = ACTION_TAP_DANCE_FN(f_pqrs),
+  [TUV]  = ACTION_TAP_DANCE_FN(f_tuv),
+  [WXYZ] = ACTION_TAP_DANCE_FN(f_wxyz)
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_ortho_6x4( /* default layer */
@@ -26,12 +139,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_KP_0,   KC_NO,       KC_KP_DOT,      KC_KP_ENTER  \
   ),
   [1] = LAYOUT_ortho_6x4( /* 2nd layer */
-    RESET,   _______, _______, _______, \
-    _______, XXXXXXX, XXXXXXX, XXXXXXX, \
-    KC_P,    KC_T,    KC_W,    _______, \
-    KC_G,    KC_J,    KC_M,    XXXXXXX, \
-    XXXXXXX, KC_A,    KC_D,    _______, \
-    XXXXXXX, _______, _______, _______  \
+    TD(RESET), _______,   _______,   _______, \
+    _______,   XXXXXXX,   XXXXXXX,   XXXXXXX, \
+    TD(PQRS),  TD(TUV),   TD(WXYZ),  _______, \
+    TD(GHI),   TD(JKL),   TD(MNO),   XXXXXXX, \
+    XXXXXXX,   TD(ABC),   TD(DEF),   _______, \
+    XXXXXXX,   _______,   _______,   _______  \
   ),
 };
 

@@ -9,7 +9,7 @@
 #define DEVICE_VER      0x501
 #define MANUFACTURER    K.T.E.C.
 #define PRODUCT         Daisy
-#define DESCRIPTION     qmk port for Daisy
+#define DESCRIPTION     Daisy 40% keyboard
 
 /* key matrix size */
 #define MATRIX_ROWS 4
@@ -29,11 +29,15 @@
 #define MATRIX_COL_PINS { F0, F1, F4, F5, F6, F7, B6, B5, B4, D7, D6 }
 #define UNUSED_PINS
 
+#define QMK_ESC_OUTPUT F0 // usually COL
+#define QMK_ESC_INPUT D2 // usually ROW
+
 /* COL2ROW, ROW2COL*/
 #define DIODE_DIRECTION COL2ROW
 
 #define BACKLIGHT_PIN D0
 #define BACKLIGHT_LEVELS 6
+#define BACKLIGHT_ON_STATE 1
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
